@@ -11,11 +11,12 @@ import (
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 const testCollection = "test"
 
-func cleanup(db *mgo.Database) {
+func cleanup(db *mongo.Database) {
 	collections, err := db.CollectionNames()
 	if err != nil {
 		panic(err)
@@ -26,11 +27,11 @@ func cleanup(db *mgo.Database) {
 	}
 }
 
-var mongo *mgo.Database
+var mongo *mongo.Database
 
 func TestMain(m *testing.M) {
 	addr, err := url.Parse(os.Getenv("MONGO_URL"))
-	session, err := mgo.Dial(addr.String())
+	session, err := mongo.Dial(addr.String())
 	if err != nil {
 		panic(err)
 	}

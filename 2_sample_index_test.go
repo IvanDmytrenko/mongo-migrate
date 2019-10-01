@@ -3,15 +3,15 @@
 package migrate
 
 import (
-	"github.com/globalsign/mgo"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 const globalTestIndexName = "test_idx_2"
 
 func init() {
-	Register(func(db *mgo.Database) error {
-		return db.C(globalTestCollection).EnsureIndex(mgo.Index{Name: globalTestIndexName, Key: []string{"a"}})
-	}, func(db *mgo.Database) error {
-		return db.C(globalTestCollection).DropIndexName(globalTestIndexName)
+	Register(func(db *mongo.Database) error {
+		return db.Collection(globalTestCollection).EnsureIndex(mongo.Index{Name: globalTestIndexName, Key: []string{"a"}})
+	}, func(db *mongo.Database) error {
+		return db.Collection(globalTestCollection).DropIndexName(globalTestIndexName)
 	})
 }
