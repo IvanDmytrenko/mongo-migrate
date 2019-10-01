@@ -3,11 +3,12 @@ package migrate
 
 import (
 	"context"
+	"log"
+	"time"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/x/bsonx"
-	"log"
-	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -57,7 +58,7 @@ func (m *Migrate) SetLogger(l *log.Logger) {
 }
 
 func (m *Migrate) isCollectionExist(name string) (bool, error) {
-	cursor, err := m.db.ListCollections(context.Background(),nil, nil)
+	cursor, err := m.db.ListCollections(context.Background(), bson.M{}, nil)
 	if err != nil {
 		return false, err
 	}
