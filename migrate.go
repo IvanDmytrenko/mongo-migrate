@@ -58,6 +58,7 @@ func (m *Migrate) SetLogger(l *log.Logger) {
 }
 
 func (m *Migrate) isCollectionExist(name string) (bool, error) {
+	m.db.Collection(name).Drop(context.Background())
 	cursor, err := m.db.ListCollections(context.Background(), bson.M{}, nil)
 	if err != nil {
 		return false, err
